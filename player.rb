@@ -49,8 +49,7 @@ class Player
     check_pawn_finish(pawn, dice_result) if pawn.step_counter > $STEPS
     
     if pawn.step_counter > 0 # don't show after pawn has finished
-      puts 'New pawn board position: ' + pawn.board_position.to_s + '; total steps done: ' +
-          pawn.step_counter.to_s
+      puts "New pawn board position: #{pawn.board_position.to_s}; total steps done: #{pawn.step_counter.to_s}"
       puts "Pawn has finished" if pawn.finished == true
     end
     check_winner
@@ -59,11 +58,10 @@ class Player
   private
 
   def choose_between_pawns(pawns)
-    puts 'Player ' + self.name.to_s + ': you have ' + pawns.size.to_s + ' pawns available. Their positions on the table are:'
+    puts "Player #{self.name.to_s}: you have #{pawns.size.to_s} pawns available. Their positions on the table are:"
 
     pawns.each_with_index do |pawn, index|
-      puts 'Pawn ' + (index + 1).to_s + ': board position: ' + pawn.board_position.to_s + ', ' +
-          pawn.step_counter.to_s + ' steps done'
+      puts "Pawn #{(index + 1).to_s}: board position: #{pawn.board_position.to_s}, #{pawn.step_counter.to_s} steps done"
     end
     puts 'Please select a pawn by typeing the number'
 
@@ -79,7 +77,7 @@ class Player
   # check if player has won and exit script
   def check_winner
     if pawns_array.all? { |pawn| pawn.finished == true }
-      puts 'Player ' + self.name.to_s + ' has won!!! Congrats!!!'
+      puts "Player #{self.name.to_s} has won!!! Congrats!!!"
       exit
     end
   end

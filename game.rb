@@ -46,11 +46,11 @@ class Game
   private
 
   def roll_dice(player)
-    puts '', '', 'Player ' + player.name.to_s + ': Press enter to roll your dice'
+    puts '', '', "Player #{player.name.to_s}: Press enter to roll your dice"
     gets
 
     dice_result = player.roll_dice
-    puts 'Player ' + player.name.to_s + ': you have rolled ' + dice_result.to_s
+    puts "Player #{player.name.to_s}: you have rolled #{dice_result.to_s}"
     dice_result
   end
 
