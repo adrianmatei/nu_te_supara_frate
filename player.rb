@@ -18,13 +18,31 @@ class Player
 
   def select_pawn(dice_result)
     active_pawns = pawns_array.select { |pawn| pawn.active == true && pawn.finished == false }
+    choose_pawn(dice_result,active_pawns)
+  end
 
+  def move_pawn(pawn, dice_result)
+    pawn.move(dice_result, self.position_offset)
+    check_pawn_finish(pawn, dice_result) if pawn.step_counter > $STEPS
+    
+    if pawn.step_counter > 0 # don't show after pawn has finished
+      puts "New pawn board position: #{pawn.board_position.to_s}; total steps done: #{pawn.step_counter.to_s}"
+      puts "Pawn has finished" if pawn.finished == true
+    end
+    check_winner
+  end
+
+  private
+
+  def choose_pawn(dice_result,active_pawns)
+    selected_pawn = nil
     if dice_result == 6
       if pawns_array.any? { |pawn| pawn.active == false && pawn.finished == false } # if there are disabled pawns
         puts 'One more of your pawns has been added to the game!'
         puts 'You can roll again!'
         selected_pawn = pawns_array.find {|pawn| pawn.active == false && pawn.finished == false }
         selected_pawn.activate
+        return selected_pawn
       else
         if active_pawns.size > 1
           selected_pawn = active_pawns[choose_between_pawns(active_pawns)] # choose pawn if there are more on the table
@@ -43,19 +61,6 @@ class Player
     end
     selected_pawn
   end
-
-  def move_pawn(pawn, dice_result)
-    pawn.move(dice_result, self.position_offset)
-    check_pawn_finish(pawn, dice_result) if pawn.step_counter > $STEPS
-    
-    if pawn.step_counter > 0 # don't show after pawn has finished
-      puts "New pawn board position: #{pawn.board_position.to_s}; total steps done: #{pawn.step_counter.to_s}"
-      puts "Pawn has finished" if pawn.finished == true
-    end
-    check_winner
-  end
-
-  private
 
   def choose_between_pawns(pawns)
     puts "Player #{self.name.to_s}: you have #{pawns.size.to_s} pawns available. Their positions on the table are:"

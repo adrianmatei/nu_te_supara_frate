@@ -11,6 +11,8 @@ class Game
     select_player
   end
 
+  private
+
   def select_player
     while players_arr.all? { |player| player.winner == false }
       players_arr.each do |player|
@@ -42,8 +44,6 @@ class Game
     player.move_pawn(selected_pawn, dice_result)
     disable_pawn(opponent_pawns, selected_pawn.board_position)
   end
-
-  private
 
   def roll_dice(player)
     puts '', '', "Player #{player.name.to_s}: Press enter to roll your dice"
